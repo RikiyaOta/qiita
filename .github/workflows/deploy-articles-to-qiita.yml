@@ -26,16 +26,16 @@ jobs:
         run: echo '${{ toJSON(steps.changed-files.outputs) }}'
       - name: Create articles
         if: ${{ steps.changed-files.outputs.any_changed == 'true' && steps.changed-files.outputs.added_files != '' }}
-        run: deno run createArticles.ts "${{steps.changed-files.outputs.added_files}}"
+        run: deno run createArticles.ts ${{steps.changed-files.outputs.added_files}}
       - name: Copy articles
         if: ${{ steps.changed-files.outputs.any_changed == 'true' && steps.changed-files.outputs.copied_files != '' }}
-        run: deno run copyArticles.ts "${{steps.changed-files.outputs.copied_files}}"
+        run: deno run copyArticles.ts ${{steps.changed-files.outputs.copied_files}}
       - name: Modify articles
         if: ${{ steps.changed-files.outputs.any_changed == 'true' && steps.changed-files.outputs.modified_files != '' }}
-        run: deno run modifyArticles.ts "${{steps.changed-files.outputs.modified_files}}"
+        run: deno run modifyArticles.ts ${{steps.changed-files.outputs.modified_files}}
       - name: Rename articles
         if: ${{ steps.changed-files.outputs.any_changed == 'true' && steps.changed-files.outputs.all_old_new_renamed_files != '' }}
-        run: deno run renameArticles.ts "${{steps.changed-files.outputs.all_old_new_renamed_files}}"
+        run: deno run renameArticles.ts ${{steps.changed-files.outputs.all_old_new_renamed_files}}
       - name: Delete articles
         if: ${{ steps.changed-files.outputs.any_deleted == 'true' && steps.changed-files.outputs.deleted_files != '' }}
-        run: deno run deleteArticles.ts "${{steps.changed-files.outputs.deleted_files}}"
+        run: deno run deleteArticles.ts ${{steps.changed-files.outputs.deleted_files}}
