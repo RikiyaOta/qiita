@@ -3,11 +3,12 @@ name: deploy-articles-to-qiita
 on:
   push:
     paths:
-      - 'articles/*.md'
+      - "articles/*.md"
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -16,10 +17,9 @@ jobs:
         uses: tj-actions/changed-files@v26.1
         with:
           include_all_old_new_renamed_files: true
-          files: 'articles/*.md'
+          files: "articles/*.md"
       - name: Output the output of change-files step
         uses: denoland/setup-deno@v1
         with:
           deno-version: v1.x
         run: deno run main.ts ${{ steps.changed-files.outputs }}
-
