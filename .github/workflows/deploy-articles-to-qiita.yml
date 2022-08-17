@@ -23,4 +23,4 @@ jobs:
           include_all_old_new_renamed_files: true
           files: "articles/*.md"
       - name: Output the output of change-files step
-        run: deno run main.ts ${{ toJSON(steps.changed-files.outputs) }}
+        run: 'deno run main.ts "${{ toJSON(steps.changed-files.outputs) }}"'
