@@ -22,6 +22,8 @@ jobs:
         with:
           include_all_old_new_renamed_files: true
           files: "articles/*.md"
+      - name: Debug
+        run: echo '${{ steps.changed-files.outputs }}'
       - name: Create articles
         if: ${{ steps.changed-files.outputs.any_changed == true && steps.changed-files.outputs.added_files != '' }}
         run: deno run createArticles.ts "${{steps.changed-files.outputs.added_files}}"
