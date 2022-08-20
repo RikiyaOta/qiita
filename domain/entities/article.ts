@@ -1,4 +1,4 @@
-import { RawArticle } from "./rawArticle";
+import { RawArticle } from "./rawArticle.ts";
 
 export interface IArticleRepository {
   save(article: Article): Article;

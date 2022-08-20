@@ -145,7 +145,7 @@ export class RawArticle {
   }
 
   getBody(): string {
-    const [, , , , , articleBody] = this.fileContent.split(NEW_LINE_CHAR, 6);
+    const articleBody = this.fileContent.replace(/^.*\n.*\n.*\n.*\n.*\n/, "");
     return articleBody;
   }
 }
