@@ -1,11 +1,11 @@
 import {
   RawArticle,
   IRawArticleRepository,
-} from "./../../domain/entities/rawArticle";
+} from "./../../domain/entities/rawArticle.ts";
 
 export class RawArticleRepository implements IRawArticleRepository {
   get(filePath: string): RawArticle {
-    // TODO
-    return new RawArticle(filePath);
+    const fileContent = Deno.readTextFileSync(filePath);
+    return new RawArticle(filePath, fileContent);
   }
 }
