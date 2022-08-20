@@ -1,8 +1,8 @@
 // NOTE: テストしづらいなら外に出す
-import { RawArticleRepository } from "./../infrastructure/repositories/rawArticleRepository";
-import { ArticleRepository } from "./../infrastructure/repositories/articleRepository";
-import { Article, IArticleRepository } from "./../domain/entities/article";
-import { IRawArticleRepository } from "./../domain/entities/rawArticle";
+import { RawArticleRepository } from "./../infrastructure/repositories/rawArticleRepository.ts";
+import { ArticleRepository } from "./../infrastructure/repositories/articleRepository.ts";
+import { Article, IArticleRepository } from "./../domain/entities/article.ts";
+import { IRawArticleRepository } from "./../domain/entities/rawArticle.ts";
 const articleRepository: IArticleRepository = new ArticleRepository();
 const rawArticleRepository: IRawArticleRepository = new RawArticleRepository();
 
