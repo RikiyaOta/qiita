@@ -1,6 +1,6 @@
 import {
-  RawArticle,
   IRawArticleRepository,
+  RawArticle,
 } from "./../../domain/entities/rawArticle.ts";
 
 export class RawArticleRepository implements IRawArticleRepository {

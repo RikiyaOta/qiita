@@ -1,6 +1,6 @@
 import {
-  string,
   array,
+  string,
 } from "https://denoporter.sirjosh.workers.dev/v1/deno.land/x/computed_types/src/index.ts";
 
 const FILE_PATH_PATTERN = /^articles\/(?<articleCode>.+)\.md$/;
@@ -28,11 +28,24 @@ const isValidJSONStr = (s: string) => {
   }
 };
 
+const toTagsStrFrom = (tagsLine: string) => {
+  const matched = tagsLine.match(ARTICLE_TAGS_LINE_PATTERN);
+
+  if (matched === null) return null;
+
+  const { groups } = matched as RegExpMatchArray;
+
+  if (groups === undefined) return null;
+
+  if (groups.articleTags === undefined) return null;
+
+  return groups.articleTags;
+};
+
 const isValidTags = (tagsLine: string) => {
-  if (!ARTICLE_TAGS_LINE_PATTERN.test(tagsLine)) return false;
+  const tagsStr = toTagsStrFrom(tagsLine);
 
-  const tagsStr = tagsLine.match(ARTICLE_TAGS_LINE_PATTERN).groups.articleTags;
-
+  if (tagsStr === null) return false;
   if (!isValidJSONStr(tagsStr)) return false;
 
   const tags = JSON.parse(tagsStr);
@@ -63,7 +76,7 @@ const MINIMUM_ARTICLE_LINES = ARTICLE_HEADER_LINES + MINIMUM_ARTICLE_BODY_LINES;
 const isValidFileContent = (filePath: string, fileContent: string) => {
   const maybeArticleHeaders = fileContent.split(
     NEW_LINE_CHAR,
-    MINIMUM_ARTICLE_LINES
+    MINIMUM_ARTICLE_LINES,
   );
 
   if (maybeArticleHeaders.length < MINIMUM_ARTICLE_LINES) {
@@ -71,7 +84,7 @@ const isValidFileContent = (filePath: string, fileContent: string) => {
     return false;
   }
 
-  const [, titleLine, tagsLine, privateLine, ,] = maybeArticleHeaders;
+  const [, titleLine, tagsLine, privateLine] = maybeArticleHeaders;
 
   if (!ARTICLE_TITLE_LINE_PATTERN.test(titleLine)) {
     console.error("Invalid an article title line. filePath:", filePath);
@@ -92,7 +105,7 @@ const isValidFileContent = (filePath: string, fileContent: string) => {
     "Validation passed! filePath:",
     filePath,
     " articleHeaders:",
-    maybeArticleHeaders
+    maybeArticleHeaders,
   );
   return true;
 };
@@ -112,36 +125,35 @@ export class RawArticle {
   }
 
   getCode(): string {
-    const {
-      groups: { articleCode: code },
-    } = this.filePath.match(FILE_PATH_PATTERN);
-    return code;
+    const matchedGroups = this.filePath.match(FILE_PATH_PATTERN)?.groups;
+    if (matchedGroups === undefined) throw "Invalid article code.";
+    return matchedGroups.articleCode;
   }
 
   getTitle(): string {
     const [, titleLine] = this.fileContent.split(NEW_LINE_CHAR, 2);
-    const {
-      groups: { articleTitle: title },
-    } = titleLine.match(ARTICLE_TITLE_LINE_PATTERN);
-    return title;
+    const matchedGroups = titleLine.match(ARTICLE_TITLE_LINE_PATTERN)?.groups;
+    if (matchedGroups === undefined) throw "Invalid article title.";
+    return matchedGroups.title;
   }
 
   getTags(): [{ name: string; versions: string[] }] {
     const [, , tagsLine] = this.fileContent.split(NEW_LINE_CHAR, 3);
-    const {
-      groups: { articleTags: tags },
-    } = tagsLine.match(ARTICLE_TAGS_LINE_PATTERN);
-    return JSON.parse(tags);
+    const matchedGroups = tagsLine.match(ARTICLE_TAGS_LINE_PATTERN)?.groups;
+    if (matchedGroups === undefined) throw "Invalid article tags.";
+    return JSON.parse(matchedGroups.tags);
   }
 
   getPrivate(): boolean {
     const [, , , privateLine] = this.fileContent.split(NEW_LINE_CHAR, 4);
-    const {
-      groups: { articlePrivate: articlePrivate },
-    } = privateLine.match(ARTICLE_PRIVATE_LINE_PATTERN);
+    const matchedGroups = privateLine.match(
+      ARTICLE_PRIVATE_LINE_PATTERN,
+    )?.groups;
 
-    if (articlePrivate === "true") return true;
-    else if (articlePrivate === "false") return false;
+    if (matchedGroups === undefined) throw "Invalid article private.";
+
+    if (matchedGroups.articlePrivate === "true") return true;
+    else return false;
   }
 
   getBody(): string {

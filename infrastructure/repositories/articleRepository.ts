@@ -1,5 +1,4 @@
 import ky from "https://cdn.skypack.dev/ky?dts";
-
 import {
   Article,
   IArticleRepository,
@@ -17,7 +16,7 @@ const postToQiita = (article: Article) => {
     title: article.title,
   };
 
-  return ky.post(url, { headers, json: requestBody }).json();
+  return ky.post(url, { headers, json: requestBody }).json<{ id: string }>();
 };
 
 const MAPPING_FILE_PATH = "./article_mappings.csv";
@@ -28,7 +27,7 @@ const addMappingRecord = (article: Article) => {
 };
 
 export class ArticleRepository implements IArticleRepository {
-  async save(article: Article): Article {
+  async save(article: Article): Promise<Article> {
     const { id } = await postToQiita(article);
     article.id = id;
     addMappingRecord(article);

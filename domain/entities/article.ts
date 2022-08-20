@@ -1,7 +1,7 @@
 import { RawArticle } from "./rawArticle.ts";
 
 export interface IArticleRepository {
-  save(article: Article): Article;
+  save(article: Article): Promise<Article>;
 }
 
 type ArticleTag = {
