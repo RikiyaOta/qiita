@@ -20,13 +20,18 @@ const postToQiita = (article: Article) => {
   return ky.post(url, { headers, json: requestBody }).json();
 };
 
+const MAPPING_FILE_PATH = "./article_mappings.csv";
+const addMappingRecord = (article: Article) => {
+  const { id, code } = article;
+  const mappingRecord = `${id},${code}\n`;
+  Deno.writeTextFileSync(MAPPING_FILE_PATH, mappingRecord, { append: true });
+};
+
 export class ArticleRepository implements IArticleRepository {
   async save(article: Article): Article {
-    // TODO: Qiita への記事アップロード
-    // TODO: artilce に Qiita の id を追加する
-    // TODO: mappings.csv への行の追加
     const { id } = await postToQiita(article);
     article.id = id;
+    addMappingRecord(article);
     return article;
   }
 }
