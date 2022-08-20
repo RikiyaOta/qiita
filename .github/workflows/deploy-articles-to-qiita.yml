@@ -4,10 +4,11 @@ on:
   push:
     paths:
       - "articles/*.md"
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      QIITA_ACCESS_TOKEN: ${{ secrets.QIITA_ACCESS_TOKEN }}
     steps:
       - uses: actions/checkout@v3
         with:
