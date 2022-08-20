@@ -12,6 +12,6 @@ if (filePaths.length === 0) throw "FilePaths should be at least one.";
 for (const filePath of filePaths) {
   const rawArticle = rawArticleRepository.get(filePath);
   const article = new Article(rawArticle);
-  const createdArticle = articleRepository.save(article);
+  const createdArticle = await articleRepository.save(article);
   console.log("Succeeded creating article:", createdArticle);
 }
