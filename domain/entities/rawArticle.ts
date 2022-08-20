@@ -101,12 +101,6 @@ const isValidFileContent = (filePath: string, fileContent: string) => {
     return false;
   }
 
-  console.debug(
-    "Validation passed! filePath:",
-    filePath,
-    " articleHeaders:",
-    maybeArticleHeaders,
-  );
   return true;
 };
 
