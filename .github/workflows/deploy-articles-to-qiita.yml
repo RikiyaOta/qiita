@@ -42,4 +42,4 @@ jobs:
         run: deno run -A deleteArticles.ts ${{steps.changed-files.outputs.deleted_files}}
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          file_pattern: "articles/*.md"
+          file_pattern: "article_mappings.csv"
