@@ -27,7 +27,7 @@ jobs:
         run: echo '${{ toJSON(steps.changed-files.outputs) }}'
       - name: Create articles
         if: ${{ steps.changed-files.outputs.any_changed == 'true' && steps.changed-files.outputs.added_files != '' }}
-        run: deno run createArticles.ts ${{steps.changed-files.outputs.added_files}}
+        run: deno run usecase/createArticles.ts ${{steps.changed-files.outputs.added_files}}
       - name: Copy articles
         if: ${{ steps.changed-files.outputs.any_changed == 'true' && steps.changed-files.outputs.copied_files != '' }}
         run: deno run copyArticles.ts ${{steps.changed-files.outputs.copied_files}}
