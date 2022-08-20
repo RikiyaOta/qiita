@@ -1,9 +1,26 @@
-export class RawArticle {
-  constructor(private content: string) {}
+export interface IRawArticleRepository {
+  get(filePath: string): RawArticle;
+}
 
-  validate(): boolean {
+export class RawArticle {
+  private content: string;
+  private code: string;
+
+  constructor(filePath: string) {
+    // TODO
+    // メモ：一応articles/*.md を想定してるけど、articles/**/*.md もいけたらそうしたい。
+    this.code = "";
+    this.content = "";
+  }
+
+  isValid(): boolean {
     // TODO
     return false;
+  }
+
+  getCode(): string {
+    // TODO
+    return "";
   }
 
   getTitle(): string {
@@ -24,23 +41,5 @@ export class RawArticle {
   getBody(): string {
     // TODO
     return "";
-  }
-}
-
-export class Article {
-  public title: string;
-  public tags: [{ name: string; versions: string[] }];
-  public private: boolean;
-  public body: string;
-
-  constructor(rawArticle: RawArticle) {
-    if (rawArticle.validate()) {
-      this.title = rawArticle.getTitle();
-      this.tags = rawArticle.getTags();
-      this.private = rawArticle.getPrivate();
-      this.body = rawArticle.getBody();
-    } else {
-      throw "This rawArticle is not valid!";
-    }
   }
 }
