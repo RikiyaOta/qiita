@@ -2,6 +2,8 @@ name: deploy-articles-to-qiita
 
 on:
   push:
+    branches:
+      - main
     paths:
       - "articles/*.md"
 jobs:
