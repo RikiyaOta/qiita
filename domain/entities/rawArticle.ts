@@ -128,14 +128,14 @@ export class RawArticle {
     const [, titleLine] = this.fileContent.split(NEW_LINE_CHAR, 2);
     const matchedGroups = titleLine.match(ARTICLE_TITLE_LINE_PATTERN)?.groups;
     if (matchedGroups === undefined) throw "Invalid article title.";
-    return matchedGroups.title;
+    return matchedGroups.articleTitle;
   }
 
   getTags(): [{ name: string; versions: string[] }] {
     const [, , tagsLine] = this.fileContent.split(NEW_LINE_CHAR, 3);
     const matchedGroups = tagsLine.match(ARTICLE_TAGS_LINE_PATTERN)?.groups;
     if (matchedGroups === undefined) throw "Invalid article tags.";
-    return JSON.parse(matchedGroups.tags);
+    return JSON.parse(matchedGroups.articleTags);
   }
 
   getPrivate(): boolean {
