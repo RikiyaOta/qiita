@@ -44,7 +44,7 @@ const getArticleMappings = (): Map<ARTICLE_CODE, ARTICLE_ID> => {
     recordStrArray.map((recordStr) => {
       const [id, code] = recordStr.split(",");
       return [code, id];
-    })
+    }),
   );
 };
 

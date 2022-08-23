@@ -4,6 +4,7 @@ export class RenameArticlesUseCase implements UseCaseProcessor {
   constructor(private filePaths: string[]) {}
 
   async run() {
-    console.log("TODO");
+    await new Promise((resolve) => resolve("TODO"));
+    return undefined;
   }
 }

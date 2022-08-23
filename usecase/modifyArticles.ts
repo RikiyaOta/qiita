@@ -6,7 +6,7 @@ export class ModifyArticlesUseCase implements UseCaseProcessor {
   constructor(
     private filePaths: string[],
     private rawArticleRepository: IRawArticleRepository,
-    private articleRepository: IArticleRepository
+    private articleRepository: IArticleRepository,
   ) {}
 
   async run() {
@@ -18,7 +18,7 @@ export class ModifyArticlesUseCase implements UseCaseProcessor {
       if (articleId === null) {
         console.error(
           "Unexpected error. Not found article id. article:",
-          article
+          article,
         );
       } else {
         article.id = articleId;
