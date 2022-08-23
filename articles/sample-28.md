@@ -1,6 +1,6 @@
 ---
 title: テスト v2
-tags: [{ "name": "test", "versions": ["0.0.0"] }]
+tags: [ { "name": "test", "versions": ["0.0.0"] }, { "name": "markdown", "versions": ["0.0.0"] } ]
 private: true
 ---
 
