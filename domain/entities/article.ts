@@ -3,6 +3,7 @@ import { RawArticle } from "./rawArticle.ts";
 export interface IArticleRepository {
   getId(article: Article): string | null;
   save(article: Article): Promise<Article>;
+  delete(article: Article): Promise<Article>;
 }
 
 type ArticleTag = {

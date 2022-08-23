@@ -33,6 +33,11 @@ const patchToQiita = (article: Article) => {
   return ky.patch(url, { headers: BASE_HEADERS, json: requestBody });
 };
 
+const deleteToQiita = (article: Article) => {
+  const url = `https://qiita.com/api/v2/items/${article.id}`;
+  return ky.delete(url, { headers: BASE_HEADERS });
+};
+
 const MAPPING_FILE_PATH = "./article_mappings.csv";
 
 type ARTICLE_ID = string;
@@ -54,6 +59,17 @@ const addArticleMapping = (article: Article) => {
   Deno.writeTextFileSync(MAPPING_FILE_PATH, articleMapping, { append: true });
 };
 
+const deleteArticleMapping = (article: Article) => {
+  const { id, code } = article;
+  const [headerLine, ...bodyLines] = Deno.readTextFileSync(MAPPING_FILE_PATH)
+    .split("\n");
+  const newBodyLines = bodyLines.filter(
+    (bodyLine) => bodyLine !== `${id},${code}`,
+  );
+  const newFileContent = [headerLine, ...newBodyLines].join("\n");
+  Deno.writeTextFileSync(MAPPING_FILE_PATH, newFileContent);
+};
+
 export class ArticleRepository implements IArticleRepository {
   getId(article: Article): string | null {
     const { code: articleCode } = article;
@@ -73,5 +89,11 @@ export class ArticleRepository implements IArticleRepository {
       addArticleMapping(article);
       return article;
     }
+  }
+
+  async delete(article: Article): Promise<Article> {
+    await deleteToQiita(article);
+    deleteArticleMapping(article);
+    return article;
   }
 }

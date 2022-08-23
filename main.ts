@@ -36,7 +36,11 @@ const buildUseCaseProcessor = (useCaseType: UseCaseType): UseCaseProcessor => {
     case "RENAME_ARTICLE":
       return new RenameArticlesUseCase(filePaths);
     case "DELETE_ARTICLE":
-      return new DeleteArticlesUseCase(filePaths);
+      return new DeleteArticlesUseCase(
+        filePaths,
+        new RawArticleRepository(),
+        new ArticleRepository(),
+      );
   }
 };
 
