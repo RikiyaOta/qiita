@@ -1,5 +1,6 @@
-import { Article, IArticleRepository } from "./../domain/entities/article.ts";
-import { IRawArticleRepository } from "./../domain/entities/rawArticle.ts";
+import { ModifiedArticle } from "./../domain/entities/modifiedArticle.ts";
+import { IArticleRepository } from "./../domain/repositories/articleRepository.ts";
+import { IRawArticleRepository } from "./../domain/repositories/rawArticleRepository.ts";
 import { UseCaseProcessor } from "./usecase.ts";
 
 export class ModifyArticlesUseCase implements UseCaseProcessor {
@@ -12,19 +13,10 @@ export class ModifyArticlesUseCase implements UseCaseProcessor {
   async run() {
     for (const filePath of this.filePaths) {
       const rawArticle = this.rawArticleRepository.get(filePath);
-      const article = new Article(rawArticle);
-      const articleId = this.articleRepository.getId(article);
-
-      if (articleId === null) {
-        console.error(
-          "Unexpected error. Not found article id. article:",
-          article,
-        );
-      } else {
-        article.id = articleId;
-        const modifiedArticle = await this.articleRepository.save(article);
-        console.log("Succeeded modifying article:", modifiedArticle);
-      }
+      const articleId = this.articleRepository.getId(rawArticle.getCode());
+      const modifiedArticle = new ModifiedArticle(articleId, rawArticle);
+      await this.articleRepository.save(modifiedArticle);
+      console.log("Succeeded modifying article:", modifiedArticle);
     }
   }
 }

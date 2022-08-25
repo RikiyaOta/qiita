@@ -2,13 +2,12 @@ import {
   array,
   string,
 } from "https://denoporter.sirjosh.workers.dev/v1/deno.land/x/computed_types/src/index.ts";
-
-const FILE_PATH_PATTERN = /^articles\/(?<articleCode>.+)\.md$/;
-
-const ARTICLE_TITLE_LINE_PATTERN = /^title:\s*(?<articleTitle>.+)\s*$/;
-const ARTICLE_TAGS_LINE_PATTERN = /^tags:\s*(?<articleTags>.+)\s*$/;
-const ARTICLE_PRIVATE_LINE_PATTERN =
-  /^private:\s*(?<articlePrivate>true|false)\s*$/;
+import {
+  ARTICLE_PRIVATE_LINE_PATTERN,
+  ARTICLE_TAGS_LINE_PATTERN,
+  ARTICLE_TITLE_LINE_PATTERN,
+  FILE_PATH_PATTERN,
+} from "./../constant.ts";
 
 const isValidFilePath = (filePath: string) => {
   if (FILE_PATH_PATTERN.test(filePath)) {
@@ -103,10 +102,6 @@ const isValidFileContent = (filePath: string, fileContent: string) => {
 
   return true;
 };
-
-export interface IRawArticleRepository {
-  get(filePath: string): RawArticle;
-}
 
 export class RawArticle {
   constructor(private filePath: string, private fileContent: string) {}

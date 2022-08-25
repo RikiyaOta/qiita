@@ -1,20 +1,9 @@
 import { RawArticle } from "./rawArticle.ts";
 
-export interface IArticleRepository {
-  getId(article: Article): string | null;
-  save(article: Article): Promise<Article>;
-}
-
-type ArticleTag = {
-  name: string;
-  versions: string[];
-};
-
-export class Article {
-  public id?: string;
+export class CreatedArticle {
   public code: string;
   public title: string;
-  public tags: ArticleTag[];
+  public tags: [{ name: string; versions: string[] }];
   public private: boolean;
   public body: string;
 

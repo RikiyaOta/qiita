@@ -3,7 +3,8 @@ name: deploy-articles-to-qiita
 on:
   push:
     branches:
-      - main
+      - "main"
+      - "writing/*"
     paths:
       - "articles/*.md"
 jobs:
@@ -25,23 +26,23 @@ jobs:
         with:
           include_all_old_new_renamed_files: true
           files: "articles/*.md"
-      - name: Debug
+      - name: See changed filles
         run: echo '${{ toJSON(steps.changed-files.outputs) }}'
       - name: Create articles
         if: ${{ steps.changed-files.outputs.any_changed == 'true' && steps.changed-files.outputs.added_files != '' }}
-        run: deno run -A main.ts 'CREATE_ARTICLE' ${{steps.changed-files.outputs.added_files}}
+        run: deno run -A main.ts 'CREATE_ARTICLE' ${{ steps.changed-files.outputs.added_files }}
       - name: Copy articles
         if: ${{ steps.changed-files.outputs.any_changed == 'true' && steps.changed-files.outputs.copied_files != '' }}
-        run: deno run -A main.ts 'COPY_ARTICLE' ${{steps.changed-files.outputs.copied_files}}
+        run: deno run -A main.ts 'COPY_ARTICLE' ${{ steps.changed-files.outputs.copied_files }}
       - name: Modify articles
         if: ${{ steps.changed-files.outputs.any_changed == 'true' && steps.changed-files.outputs.modified_files != '' }}
-        run: deno run -A main.ts 'MODIFY_ARTICLE' ${{steps.changed-files.outputs.modified_files}}
+        run: deno run -A main.ts 'MODIFY_ARTICLE' ${{ steps.changed-files.outputs.modified_files }}
       - name: Rename articles
         if: ${{ steps.changed-files.outputs.any_changed == 'true' && steps.changed-files.outputs.all_old_new_renamed_files != '' }}
-        run: deno run -A main.ts 'RENAME_ARTICLE' ${{steps.changed-files.outputs.all_old_new_renamed_files}}
+        run: deno run -A main.ts 'RENAME_ARTICLE' ${{ steps.changed-files.outputs.all_old_new_renamed_files }}
       - name: Delete articles
         if: ${{ steps.changed-files.outputs.any_deleted == 'true' && steps.changed-files.outputs.deleted_files != '' }}
-        run: deno run -A main.ts 'DELETE_ARTICLE' ${{steps.changed-files.outputs.deleted_files}}
+        run: deno run -A main.ts 'DELETE_ARTICLE' ${{ steps.changed-files.outputs.deleted_files }}
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           file_pattern: "article_mappings.csv"
