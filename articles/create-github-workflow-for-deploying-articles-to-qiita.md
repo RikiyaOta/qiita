@@ -1,6 +1,6 @@
 -----
 title: Qiita への記事投稿を GitHub Actions で自動化してみた
-tags: [{"name": "GitHub", "versions": ["0.0.0"]}]
+tags: [{"name": "GitHub", "versions": ["0.0.0"]}, {"name": "Deno", "versions": ["0.0.0"]}, {"name": "TypeScript", "versions": ["0.0.0"]}]
 private: true
 -----
 
