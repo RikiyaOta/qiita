@@ -38,7 +38,6 @@ const buildUseCaseProcessor = (useCaseType: UseCaseType): UseCaseProcessor => {
     case "DELETE_ARTICLE":
       return new DeleteArticlesUseCase(
         filePaths,
-        new RawArticleRepository(),
         new ArticleRepository(),
       );
   }
