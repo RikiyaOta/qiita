@@ -3,7 +3,7 @@ title: 「エリック・エヴァンスのドメイン駆動設計」を読ん�
 tags:
   - DDD
 private: false
-updated_at: '2023-07-20T17:33:56+09:00'
+updated_at: '2023-07-22T18:31:36+09:00'
 id: 2b2c4d58e46062e7b6b7
 organization_url_name: null
 slide: false
@@ -460,6 +460,10 @@ Repository はデータの永続化・復元の責務、Factory はメモリ上�
 
 なんとなくドメイン駆動設計のお気持ちが伝わって、もっと具体的な実装を見たときに話がつながってくると嬉しいです。
 
+# 参考文献
+
+- エリック・エヴァンスのドメイン駆動設計 (IT Architects’Archive ソフトウェア開発の実践) 翔泳社 エリック・エヴァンス (著), 今関 剛 (監修), 和智 右桂 (翻訳), 牧野 祐子 (翻訳)
+    - 翔泳社URL：https://www.shoeisha.co.jp/book/detail/9784798126708
 
 
 [^1]: 多分これはとても重要なことですが、『プリント基板ってなんやねん、という状態なのは当たり前だから、それを知ろうとするところから始めよう』です。ちなみにプリント基板は[こんなもの](https://www.p-ban.com/about_pcb/pcb.html)らしい。
