@@ -1,11 +1,11 @@
 ---
 title: 書籍「プログラマー脳」勉強会 Part2
 tags:
-  - 'プログラミング'
-  - '本の紹介'
+  - プログラミング
+  - 本の紹介
 private: true
-updated_at: ''
-id: null
+updated_at: '2023-08-04T09:43:32+09:00'
+id: 646d3f939b4ca709e849
 organization_url_name: null
 slide: false
 ---
